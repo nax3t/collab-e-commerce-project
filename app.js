@@ -22,9 +22,9 @@ const userRoutes = require("./routes/user");
 
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASEURL);
+// mongoose.connect(process.env.DATABASEURL);
 require("./config/passport");
-// mongoose.connect("mongodb://localhost/node-ecommerce-test");
+mongoose.connect("mongodb://localhost/node-ecommerce-test");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
@@ -66,7 +66,7 @@ app.use(function(req, res, next) {
 });
 
 // use routes
-app.use(indexRoutes);
+app.use("/", indexRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 

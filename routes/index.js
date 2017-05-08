@@ -13,6 +13,11 @@ router.get("/", function (req, res) {
     res.redirect("/products");
 });
 
+router.get('/clearcart', function (req, res) {
+    delete req.session.cart;
+    res.json({message: 'Cart cleared!'});
+});
+
 // add to cart
 router.get("/add-to-cart/:id", function (req, res) {
     var productId = req.params.id;
@@ -31,7 +36,9 @@ router.get("/add-to-cart/:id", function (req, res) {
         // store cart object in session
         req.session.cart = cart;
         console.log(req.session.cart);
-        res.redirect("/");
+
+        req.flash('success', `Successfully added ${product.title} to your cart.`);
+        res.redirect("/products");
         // FLASH MSGS...
     });
 });

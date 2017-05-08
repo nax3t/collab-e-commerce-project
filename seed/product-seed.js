@@ -67,15 +67,21 @@ var products = [
     })
 ];
 
-var done = 0;
-for (var i = 0; i < products.length; i++) {
-    products[i].save(function (err, result) {
-        done++;
-        if (done === products.length) {
-            exit();
-        }
-    });
-}
+Product.remove({}, function(err) {
+    if(err) { console.log(err) };
+    
+    var done = 0;
+    for (var i = 0; i < products.length; i++) {
+        products[i].save(function (err, result) {
+            done++;
+            if (done === products.length) {
+                exit();
+            }
+        });
+    }
+
+});
+
 
 function exit() {
     mongoose.disconnect();

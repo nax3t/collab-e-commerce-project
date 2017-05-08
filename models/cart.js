@@ -3,10 +3,9 @@
 // assign values of the old cart
 // add a new item (check if it exists), increase quantity, price, totalQty, totalPrice
 
-
 module.exports = function Cart(oldCart) {       // add old cart into new cart
     // gather data from the old cart
-    this.items = oldCart.items || {};           // an object, stored with product id
+    this.items = oldCart.items ? oldCart.items : {};           // an object, stored with product id
     this.totalQty = oldCart.totalQty || 0;
     this.totalPrice = oldCart.totalPrice || 0;
 

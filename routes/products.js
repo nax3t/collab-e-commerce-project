@@ -114,7 +114,6 @@ router.get("/:id/edit", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-    eval(require('locus'));
     var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
     var date = new Date(req.body.date);
     var newProductData = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};
