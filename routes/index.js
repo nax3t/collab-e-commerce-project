@@ -14,8 +14,10 @@ router.get("/", function (req, res) {
 });
 
 router.get('/clearcart', function (req, res) {
-    delete req.session.cart;
-    res.json({message: 'Cart cleared!'});
+    setTimeout(function() {
+        delete req.session.cart;
+        res.json({message: 'Cart cleared!'});
+    }, 10000);
 });
 
 // add to cart
@@ -67,7 +69,11 @@ router.get("/remove/:id", function (req, res) {
 router.get("/shopping-cart", function (req, res) {
     // if the cart in the session is empty, pass products to view as null
     if (!req.session.cart) {
-        return res.render("products/shopping-cart", {products: null, totalPrice: null});
+        return res.render("products/shopping-cart", {
+            products: null,
+            totalPrice: null,
+            error: 'Either your cart has expired or you haven\'t added any products yet'
+        });
     }
     // else pass the existing cart
     var cart = new Cart(req.session.cart);

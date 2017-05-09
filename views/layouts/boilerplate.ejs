@@ -11,10 +11,12 @@
 
 <body>
 
-<%- partial("./partials/header",{}) %>
+<%- partial("./partials/header") %>
 
 <div id="timer-count-down">Cart expires in: <span id="timer"></span></div>
-<div class="container">
+<div class="container" id="main-container">
+    <%- partial("./partials/flash-messages") %>
+
     <%- body -%>
 </div>
 
