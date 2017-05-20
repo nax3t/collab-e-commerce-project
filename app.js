@@ -15,16 +15,17 @@ const flash = require("connect-flash");
 const validator = require("express-validator");
 const MongoStore = require("connect-mongo")(session);
 
-const productRoutes = require("./routes/products");
+app.locals.moment = require('moment');
+
 const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/user");
-
-
+const productRoutes = require("./routes/products");
+const alcatrazRoutes = require("./routes/alcatraz");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DATABASEURL);
+// mongoose.connect(process.env.DATABASEURL);
 require("./config/passport");
-// mongoose.connect("mongodb://localhost/node-ecommerce-test");
+mongoose.connect("mongodb://localhost/node-ecommerce-test");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
@@ -69,6 +70,7 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
+app.use("/alcatraz", alcatrazRoutes);
 
 app.listen(3000, () => {
 	console.log('Server running, listening on port 3000');

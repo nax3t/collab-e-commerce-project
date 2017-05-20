@@ -17,3 +17,7 @@
 .thumbnail {
     min-height: 300px;
 }
+
+.inline-block {
+	display: inline-block;
+}

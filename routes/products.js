@@ -67,11 +67,12 @@ router.get("/", function (req, res) {
 
 //CREATE - add new product to DB
 router.post("/", function (req, res) {
-    var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
-    var date = new Date(req.body.date);
-    var newProduct = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};
+    // var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
+    // var date = new Date(req.body.date);
+    // var newProduct = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};
     // Create a new product and save to DB
-    Product.create(newProduct, function (err, newlyCreated) {
+
+    Product.create(req.body.product, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
@@ -114,7 +115,6 @@ router.get("/:id/edit", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-    eval(require('locus'));
     var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
     var date = new Date(req.body.date);
     var newProductData = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};

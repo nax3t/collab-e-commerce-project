@@ -1,14 +1,18 @@
 <% layout('layouts/boilerplate') -%>
 
 <form action="/products" method="POST">
-	<label for="date">Date:</label>
-	<input type="date" id="date" name="date" required>
-
-	<label for="time">Time:</label>
-	<input type="text" name="time" id="time" required>
+	<label for="name">Name:</label>
+	<input type="name" id="name" name="product[name]" required>
 	
-	<label for="stock">Stock Quantity:</label>
-	<input type="number" step="1" min="1" id="stock" name="stock" required>
+	<h4>Prices</h4>
+	<label for="adult">Adult:</label>
+	<input type="text" name="product[prices][adult]" id="adult">
+	
+	<label for="child">Child:</label>
+	<input type="text" name="product[prices][child]" id="child">
+
+	<label for="senior">Senior:</label>
+	<input type="text" name="product[prices][senior]" id="senior">
 
 	<input type="submit">
 </form>

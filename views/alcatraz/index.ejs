@@ -1,0 +1,28 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well">
+			<a href="/alcatraz/new" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add New</a>
+		</div>
+	</div>
+<% allAlcatraz.forEach(function(alcatraz) { %>
+  <div class="col-md-12">
+  	<div class="well">
+  		<div class="pull-left">
+		  	Date &amp; Time:</h4>
+		  	<h4><%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %></h4>
+				Stock Quantity:
+				<h4><%= alcatraz.stock_qty %></h4>
+			</div>
+			<div class="pull-right">
+				<a href="/alcatraz/<%= alcatraz._id %>/edit" class="btn btn-warning">Edit</a>
+				<form action="/alcatraz/<%= alcatraz._id %>?_method=DELETE" method="POST" class="inline-block">
+					<input type="submit" value="Delete" class="btn btn-danger">
+				</form>
+			</div>
+			<div class="clearfix"></div>
+  	</div>
+  </div>
+<% }); %>
+</div>
