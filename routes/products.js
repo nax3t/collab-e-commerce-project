@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
+const Alcatraz = require("../models/alcatraz");
 const moment = require("moment");
 const stripe = require("stripe")(process.env.SECRET_KEY);
 // var middleware = require("../middleware");
@@ -86,7 +87,12 @@ router.get("/:id", function (req, res) {
             console.log(err);
         } else {
             if(foundProduct.name.toLowerCase().indexOf('alcatraz') !== -1) {
-                res.render("products/alcatraz-show", {product: foundProduct});
+                Alcatraz.find({}, function(err, allAlcatraz) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    res.render("products/alcatraz-show", {product: foundProduct, allAlcatraz: allAlcatraz});
+                });
             } else {
                 res.render("products/show", {product: foundProduct});
             }

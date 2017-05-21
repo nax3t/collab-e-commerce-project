@@ -7,32 +7,49 @@
 
 			<div class="caption">
 				<h4><%= product.name %></h4>
-				<h6>From: <%= product.prices.adult %></h6>
+				<h6>From: $<%= product.prices.adult %></h6>
 				<p class="description">Combine any product with Alcatraz Island Tour</p>
 			</div>
+		</div>
+		
+		<div class="well">
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores repudiandae at mollitia eveniet eaque, officia magni, sed obcaecati dolores veritatis molestias fuga, eligendi quidem atque in earum. Nulla, voluptas eum.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque inventore amet esse laboriosam dolores error provident nisi voluptatum, dolorem optio odio ut laborum, ad impedit sed ab aperiam molestias voluptate.</p>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque inventore amet esse laboriosam dolores error provident nisi voluptatum, dolorem optio odio ut laborum, ad impedit sed ab aperiam molestias voluptate.</p>
 		</div>
 	</div>
 	<div class="col-md-8">
 		<form action="#" id="alcatraz-purchase-form" method="POST">
+			<div class="form-group form-group-lg">
+				<label for="adult">Adult:</label>
+				<input type="number" name="adult" id="order[adult]" class="form-control" step="1" min="0" value="0">
+
+				<label for="child">Child:</label>
+				<input type="number" name="child" id="order[child]" class="form-control" step="1" min="0" value="0">
+				
+				<label for="senior">Senior:</label>
+				<input type="number" name="senior" id="order[senior]" class="form-control" step="1" min="0" value="0">
+			</div>
+			
 			<div>
-				<label for="bundled-product">Choose product to bundle with:</label>
-				<select name="bundled-product" id="bundled-product" class="form-control" required>
+				<label for="combination-product">Choose product to combine with Alcatraz:</label>
+				<select name="order[combination-product]" id="combination-product" class="form-control" required>
 					<option value="" selected disabled>Select product:</option>
 					<option value="2-day-bus">2 Day Bus tour</option>
 					<option value="bay-cruise">Bay Cruise</option>
 					<option value="muir-woods">Muir Woods</option>
 				</select>
 			</div>
-			<div class="form-group form-group-lg">
-				<label for="adult">Adult:</label>
-				<input type="number" name="adult" id="adult" class="form-control" step="1" min="0" value="0">
 
-				<label for="child">Child:</label>
-				<input type="number" name="child" id="child" class="form-control" step="1" min="0" value="0">
-				
-				<label for="senior">Senior:</label>
-				<input type="number" name="senior" id="senior" class="form-control" step="1" min="0" value="0">
+			<div>
+				<label for="alcatraz-datetime">Choose Alcatraz Day and Time:</label>
+				<select name="order[alcatraz-datetime]" id="alcatraz-datetime" class="form-control" required>
+					<% allAlcatraz.forEach(function(alcatraz) { %>
+						<option value="<%= alcatraz.datetime %>"><%= moment(alcatraz.datetime).format('ddd MMMM Do @ h:mm a') %></option>
+					<% }) %>
+				</select>
 			</div>
+			
 			<div>
 				<h4>Total:</h4>
 				$<span id="totalDisplay">0.00</span>
