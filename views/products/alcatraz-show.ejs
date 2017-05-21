@@ -14,13 +14,22 @@
 	</div>
 	<div class="col-md-8">
 		<form action="#" id="alcatraz-purchase-form" method="POST">
+			<div>
+				<label for="bundled-product">Choose product to bundle with:</label>
+				<select name="bundled-product" id="bundled-product" class="form-control" required>
+					<option value="" selected disabled>Select product:</option>
+					<option value="2-day-bus">2 Day Bus tour</option>
+					<option value="bay-cruise">Bay Cruise</option>
+					<option value="muir-woods">Muir Woods</option>
+				</select>
+			</div>
 			<div class="form-group form-group-lg">
 				<label for="adult">Adult:</label>
 				<input type="number" name="adult" id="adult" class="form-control" step="1" min="0" value="0">
 
 				<label for="child">Child:</label>
 				<input type="number" name="child" id="child" class="form-control" step="1" min="0" value="0">
-
+				
 				<label for="senior">Senior:</label>
 				<input type="number" name="senior" id="senior" class="form-control" step="1" min="0" value="0">
 			</div>

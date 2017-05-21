@@ -55,30 +55,20 @@ router.get("/", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            var productChunks = [];
-            var chunkSize = 4;  // number of products per row
-            for (var i = 0; i < allProducts.length; i += chunkSize) {
-                productChunks.push(allProducts.slice(i, i + chunkSize));
-            }
-            res.render("products/index", {products: productChunks});
+            res.render("products/index", {products: allProducts});
         }
     });
 });
 
 //CREATE - add new product to DB
 router.post("/", function (req, res) {
-    // var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
-    // var date = new Date(req.body.date);
-    // var newProduct = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};
-    // Create a new product and save to DB
-
     Product.create(req.body.product, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
             //redirect back to products page
             console.log(newlyCreated);
-            res.redirect(`/products/${newlyCreated.id}`);
+            res.redirect('/products');
         }
     });
 });
@@ -95,9 +85,11 @@ router.get("/:id", function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log(foundProduct);
-            //render show template with that product
-            res.render("products/show", {product: foundProduct});
+            if(foundProduct.name.toLowerCase().indexOf('alcatraz') !== -1) {
+                res.render("products/alcatraz-show", {product: foundProduct});
+            } else {
+                res.render("products/show", {product: foundProduct});
+            }
         }
     });
 });
@@ -115,15 +107,12 @@ router.get("/:id/edit", function (req, res) {
 });
 
 router.put("/:id", function (req, res) {
-    var formattedDate = moment(req.body.date).format('MMMM Do YYYY');
-    var date = new Date(req.body.date);
-    var newProductData = {formattedDate: formattedDate, date: date, time: req.body.time, stock: req.body.stock};
-    Product.findByIdAndUpdate(req.params.id, newProductData, {new: true}, function (err, updatedProduct) {
+    Product.findByIdAndUpdate(req.params.id, req.body.product, {new: true}, function (err, updatedProduct) {
         if (err) {
             console.log(err);
             res.redirect("back");
         } else {
-            res.redirect(`/products/${updatedProduct.id}`);
+            res.redirect('/products');
         }
     });
 });
