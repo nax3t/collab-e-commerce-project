@@ -1,6 +1,6 @@
 <% layout("layouts/boilerplate") -%>
 
-<form action="/products/<%= product._id %>?_method=PUT" method="POST">
+<form action="/products/<%= product._id %>" method="POST">
 	<label for="name">Name:</label>
 	<input type="name" id="name" name="product[name]" value="<%= product.name %>" required>
 
@@ -17,5 +17,32 @@
 	<label for="senior">Senior:</label>
 	<input type="text" name="product[prices][senior]" value="<%= product.prices.senior %>" id="senior">
 
-	<input type="submit">
+	<h4>Description</h4>
+	<div id="summernote" name="test">
+		<%- product.description %>
+	</div>
+
+	<input type="submit" class="btn btn-primary">
 </form>
+
+<script>
+	$(document).ready(function() {
+	  $('#summernote').summernote({height: 200});
+	  $('form').submit(function(e) {
+	  	e.preventDefault();
+	  	var html = $('#summernote').summernote('code');
+	  	var formData = $(this).serialize();
+	  	formData += '&product%5Bdescription%5D=' + html;
+	  	$.ajax({
+	  		url: $(this).attr('action'),
+	  		data: formData,
+	  		type: 'PUT',
+	  		success: function(response) {
+		  		if(response === "Success!") {
+		  			window.location = "/products";
+		  		}
+	  		}
+	  	});
+	  })
+	});
+</script>

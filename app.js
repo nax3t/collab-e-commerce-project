@@ -5,6 +5,7 @@ const keyPublishable = process.env.PUBLISHABLE_KEY;
 const express = require("express");
 const app = express();
 const engine = require('ejs-mate');
+// const expressSanitizer = require('express-sanitizer');
 const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -30,6 +31,7 @@ mongoose.connect("mongodb://localhost/node-ecommerce-test");
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+// app.use(expressSanitizer());
 app.use(validator());
 
 // use ejs-locals for all ejs templates: 

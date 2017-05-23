@@ -13,9 +13,7 @@
 		</div>
 
 		<div class="well">
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maiores repudiandae at mollitia eveniet eaque, officia magni, sed obcaecati dolores veritatis molestias fuga, eligendi quidem atque in earum. Nulla, voluptas eum.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque inventore amet esse laboriosam dolores error provident nisi voluptatum, dolorem optio odio ut laborum, ad impedit sed ab aperiam molestias voluptate.</p>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque inventore amet esse laboriosam dolores error provident nisi voluptatum, dolorem optio odio ut laborum, ad impedit sed ab aperiam molestias voluptate.</p>
+			<%- product.description %>
 		</div>
 	</div>
 	<div class="col-md-8">
@@ -38,6 +36,10 @@
 		</form>
 	</div>
 </div>
+
+<form action="/products/<%= product._id %>?_method=DELETE" method="POST">
+	<input type="submit" value="Delete" class="btn btn-danger">
+</form>
 
 <script>
 	$("#alcatraz-purchase-form").on("input", function(e) {

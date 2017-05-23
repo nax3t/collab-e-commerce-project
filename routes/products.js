@@ -66,10 +66,11 @@ router.post("/", function (req, res) {
     Product.create(req.body.product, function (err, newlyCreated) {
         if (err) {
             console.log(err);
+            res.status(500).json(err);
         } else {
-            //redirect back to products page
+            // send success response
             console.log(newlyCreated);
-            res.redirect('/products');
+            res.status(200).json('Success!');
         }
     });
 });
@@ -116,13 +117,24 @@ router.put("/:id", function (req, res) {
     Product.findByIdAndUpdate(req.params.id, req.body.product, {new: true}, function (err, updatedProduct) {
         if (err) {
             console.log(err);
-            res.redirect("back");
+            res.status(500).json(err);
+        } else {
+            // send success response
+            console.log(updatedProduct);
+            res.status(200).json('Success!');
+        }
+    });
+});
+
+router.delete("/:id", function (req, res) {
+    Product.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
+            console.log(err);
         } else {
             res.redirect('/products');
         }
     });
 });
-
 
 //middleware
 // function isLoggedIn(req, res, next){

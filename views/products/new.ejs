@@ -16,6 +16,26 @@
 
 	<label for="senior">Senior:</label>
 	<input type="text" name="product[prices][senior]" id="senior">
+	
+	<h4>Description</h4>
+	<div id="summernote" name="test"></div>
 
-	<input type="submit">
+	<input type="submit" class="btn btn-primary">
 </form>
+
+<script>
+	$(document).ready(function() {
+	  $('#summernote').summernote({height: 200});
+	  $('form').submit(function(e) {
+	  	e.preventDefault();
+	  	var html = $('#summernote').summernote('code');
+	  	var formData = $(this).serialize();
+	  	formData += '&product%5Bdescription%5D=' + html;
+	  	$.post('/products', formData, function(response) {
+	  		if(response === "Success!") {
+	  			window.location = "/products";
+	  		}
+	  	});
+	  })
+	});
+</script>
