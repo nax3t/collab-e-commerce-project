@@ -9,19 +9,51 @@
 <% allAlcatraz.forEach(function(alcatraz) { %>
   <div class="col-md-12">
   	<div class="well">
-  		<div class="pull-left">
-		  	Date &amp; Time:</h4>
-		  	<h4><%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %></h4>
-				Stock Quantity:
-				<h4><%= alcatraz.stock_qty %></h4>
-			</div>
-			<div class="pull-right">
-				<a href="/alcatraz/<%= alcatraz._id %>/edit" class="btn btn-warning">Edit</a>
-				<form action="/alcatraz/<%= alcatraz._id %>?_method=DELETE" method="POST" class="inline-block">
-					<input type="submit" value="Delete" class="btn btn-danger">
-				</form>
-			</div>
-			<div class="clearfix"></div>
+  		<div class="row">
+  			<div class="col-md-8">
+  				<p>
+			  		<strong><%= alcatraz.stockQty %></strong> tickets on <strong><%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %></strong>
+		  		</p>
+					<p>
+						<button class="btn btn-sm btn-success" type="button" data-toggle="collapse" data-target="#<%= alcatraz._id %>" aria-expanded="false" aria-controls="<%= alcatraz._id %>">
+						  Prices <span class="caret"></span>
+						</button>
+					</p>
+					<div class="collapse" id="<%= alcatraz._id %>">
+						<div class="row">
+							<div class="col-md-4">
+								<p><strong>Bay Cruise</strong></p>
+								<p>Adult: <strong><%= alcatraz.prices.bayCruise.adult %></strong></p>
+								<p>Senior: <strong><%= alcatraz.prices.bayCruise.senior %></strong></p>
+								<p>Child: <strong><%= alcatraz.prices.bayCruise.child %></strong></p>
+							</div>
+
+							<div class="col-md-4">
+								<p><strong>One Day Bus</strong></p>
+								<p>Adult: <strong><%= alcatraz.prices.oneDayBus.adult %></strong></p>
+								<p>Senior: <strong><%= alcatraz.prices.oneDayBus.senior %></strong></p>
+								<p>Child: <strong><%= alcatraz.prices.oneDayBus.child %></strong></p>
+							</div>
+
+							<div class="col-md-4">
+								<p><strong>Two Day Bus</strong></p>
+								<p>Adult: <strong><%= alcatraz.prices.twoDayBus.adult %></strong></p>
+								<p>Senior: <strong><%= alcatraz.prices.twoDayBus.senior %></strong></p>
+								<p>Child: <strong><%= alcatraz.prices.twoDayBus.child %></strong></p>
+							</div>
+						</div>
+	  			</div>
+				</div>
+				<div class="col-md-4">
+					<div class="pull-right">
+						<a href="/alcatraz/<%= alcatraz._id %>/edit" class="btn btn-warning">Edit</a>
+						<form action="/alcatraz/<%= alcatraz._id %>?_method=DELETE" method="POST" class="inline-block">
+							<input type="submit" value="Delete" class="btn btn-danger">
+						</form>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+  		</div>
   	</div>
   </div>
 <% }); %>

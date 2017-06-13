@@ -22,6 +22,7 @@ const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/products");
 const alcatrazRoutes = require("./routes/alcatraz");
+const priceRoutes = require("./routes/prices");
 
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.DATABASEURL);
@@ -73,6 +74,7 @@ app.use(indexRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 app.use("/alcatraz", alcatrazRoutes);
+app.use("/prices", priceRoutes);
 
 app.listen(3000, () => {
 	console.log('Server running, listening on port 3000');

@@ -1,0 +1,28 @@
+<% layout("layouts/boilerplate") -%>
+
+<form action="/prices" method="POST">
+
+	<div class="form-group">
+		<label for="title">Title</label>
+		<input type="text" id="title" name="price[title]" class="form-control" placeholder="One Day Big Bus $110 - $120" required>
+	</div>
+	
+	<h3>Prices</h3>
+	
+	<div class="form-group">
+		<label for="adult">Adult</label>
+		<input type="number" id="adult" name="price[adult]" class="form-control">
+	</div>
+	
+	<div class="form-group">
+		<label for="senior">Senior</label>
+		<input type="number" id="senior" name="price[senior]" class="form-control">
+	</div>
+
+	<div class="form-group">
+		<label for="child">Child</label>
+		<input type="number" id="child" name="price[child]" class="form-control">
+	</div>
+
+	<input type="submit" class="btn btn-default">
+</form>

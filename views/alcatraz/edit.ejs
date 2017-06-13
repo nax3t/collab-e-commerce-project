@@ -1,10 +1,9 @@
 <% layout("layouts/boilerplate") -%>
-
 <form action="/alcatraz" method="POST">
 	<div class="form-group">
 		<label for="datetime">Date and Time</label>
 		<div class="input-group date" id="datetimepicker1">
-			<input type="text" id="datetime" name="alcatraz[datetime]" class="form-control" required>
+			<input type="text" id="datetime" name="alcatraz[datetime]" value="<%= moment(alcatraz['datetime']).format('MM/DD/YYYY HH:mm A') %>" class="form-control" required>
 			<span class="input-group-addon">
 				<span class="glyphicon glyphicon-calendar"></span>
 			</span>
@@ -12,7 +11,7 @@
 	</div>
 	<div class="form-group">
 		<label for="stock-qty">Stock Quantity</label>
-		<input type="number" id="stock-qty" name="alcatraz[stockQty]" class="form-control" required>
+		<input type="number" id="stock-qty" name="alcatraz[stockQty]" value="<%= alcatraz['stockQty'] %>" class="form-control" required>
 	</div>
 	
 	<fieldset>
@@ -21,22 +20,34 @@
 		
 		<label for="bay-cruise">Bay Cruise</label>
 		<select id="bay-cruise" name="alcatraz[prices][bayCruise]" class="form-control">
+		<option value="<%= `${alcatraz.prices.bayCruise.adult}*${alcatraz.prices.bayCruise.senior}*${alcatraz.prices.bayCruise.child}*${alcatraz.prices.bayCruise.title}` %>" selected><%= alcatraz.prices.bayCruise.title %></option>
 		<% prices.forEach(function(price) { %>
-		  <% if(price.title.match(/bay cruise/i)) { %><option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>"><%= price.title %></option><% } %>
+		  <% if(price.title.match(/bay cruise/i)) { %>
+		  <option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>">
+		  	<%= price.title %>
+		  </option>
+		  <% } %>
 		<% }); %>
 		</select>
 		
 		<label for="one-day-bus">One Day Bus Tour</label>
 		<select id="one-day-bus" name="alcatraz[prices][oneDayBus]" class="form-control">
 		<% prices.forEach(function(price) { %>
-		  <% if(price.title.match(/one/i)) { %><option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>"><%= price.title %></option><% } %>
+		  <% if(price.title.match(/one/i)) { %>
+		  <option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>">
+		  	<%= price.title %></option>
+		  <% } %>
 		<% }); %>
 		</select>
 	
 		<label for="two-day-bus">Two Day Bus Tour</label>
 		<select id="two-day-bus" name="alcatraz[prices][twoDayBus]" class="form-control">
 		<% prices.forEach(function(price) { %>
-		  <% if(price.title.match(/two/i)) { %><option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>"><%= price.title %></option><% } %>
+		  <% if(price.title.match(/two/i)) { %>
+		  <option value="<%= `${price.adult}*${price.senior}*${price.child}*${price.title}` %>">
+		  	<%= price.title %>
+		  </option>
+		  <% } %>
 		<% }); %>
 		</select>
 	</fieldset>
