@@ -21,8 +21,10 @@ app.locals.moment = require('moment');
 const indexRoutes = require("./routes/index");
 const userRoutes = require("./routes/user");
 const productRoutes = require("./routes/products");
-const alcatrazRoutes = require("./routes/alcatraz");
-const priceRoutes = require("./routes/prices");
+const alcatrazAdminRoutes = require("./routes/admin/alcatraz");
+const alcatrazCustomerRoutes = require("./routes/customer/alcatraz");
+const comboProductRoutes = require("./routes/admin/comboproducts");
+const categoryRoutes = require("./routes/admin/categories");
 
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.DATABASEURL);
@@ -73,8 +75,10 @@ app.use(function(req, res, next) {
 app.use(indexRoutes);
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
-app.use("/alcatraz", alcatrazRoutes);
-app.use("/prices", priceRoutes);
+app.use("/admin/alcatraz", alcatrazAdminRoutes);
+app.use("/alcatraz-packages", alcatrazCustomerRoutes);
+app.use("/admin/combo-products", comboProductRoutes);
+app.use("/admin/categories", categoryRoutes);
 
 app.listen(3000, () => {
 	console.log('Server running, listening on port 3000');

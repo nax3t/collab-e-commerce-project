@@ -1,0 +1,36 @@
+<% layout("/layouts/boilerplate") -%>
+<form action="/alcatraz/<%= alcatraz._id %>?_method=PUT" method="POST">
+	<div class="form-group">
+		<label for="datetime">Date and Time</label>
+		<div class="input-group date" id="datetimepicker1">
+			<input type="text" id="datetime" name="alcatraz[datetime]" value="<%= moment(alcatraz['datetime']).format('MM/DD/YYYY HH:mm A') %>" class="form-control" required>
+			<span class="input-group-addon">
+				<span class="glyphicon glyphicon-calendar"></span>
+			</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="stock-qty">Stock Quantity</label>
+		<input type="number" id="stock-qty" name="alcatraz[stockQty]" value="<%= alcatraz['stockQty'] %>" class="form-control" required>
+	</div>
+	
+	<fieldset>
+		<legend>Combination Products</legend>
+		<p><a href="/combo-products/new" target="_blank" class="btn btn-sm btn-success">Create New Combo Product</a></p>
+		<select multiple class="form-control" name="alcatraz[comboProducts]" required>
+		<% comboProducts.forEach(function(comboProduct) { %>
+		  <option value="<%= comboProduct._id %>" <%= alcatraz.comboProducts.indexOf(comboProduct._id) !== -1 ? 'selected' : '' %>>
+		  	<%= comboProduct.title %>
+		  </option>
+		<% }); %>
+		</select>
+	</fieldset>
+
+	<input type="submit" class="btn btn-primary">
+</form>
+
+<script type="text/javascript">
+	$(function () {
+		$('#datetimepicker1').datetimepicker();
+	});
+</script>

@@ -1,9 +1,9 @@
-<% layout("layouts/boilerplate") -%>
+<% layout("/layouts/boilerplate") -%>
 
 <div class="row">
 	<div class="col-md-12">
 		<div class="well">
-			<a href="/alcatraz/new" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add New</a>
+			<a href="/admin/alcatraz/new" class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Add New</a>
 		</div>
 	</div>
 <% allAlcatraz.forEach(function(alcatraz) { %>
@@ -21,28 +21,13 @@
 					</p>
 					<div class="collapse" id="<%= alcatraz._id %>">
 						<div class="row">
-							<div class="col-md-4">
-								<p><strong>Bay Cruise</strong></p>
-								<p>Adult: <strong><%= alcatraz.prices.bayCruise.adult %></strong></p>
-								<p>Senior: <strong><%= alcatraz.prices.bayCruise.senior %></strong></p>
-								<p>Child: <strong><%= alcatraz.prices.bayCruise.child %></strong></p>
-							</div>
-
-							<div class="col-md-4">
-								<p><strong>One Day Bus</strong></p>
-								<p>Adult: <strong><%= alcatraz.prices.oneDayBus.adult %></strong></p>
-								<p>Senior: <strong><%= alcatraz.prices.oneDayBus.senior %></strong></p>
-								<p>Child: <strong><%= alcatraz.prices.oneDayBus.child %></strong></p>
-							</div>
-
-							<div class="col-md-4">
-								<p><strong>Two Day Bus</strong></p>
-								<p>Adult: <strong><%= alcatraz.prices.twoDayBus.adult %></strong></p>
-								<p>Senior: <strong><%= alcatraz.prices.twoDayBus.senior %></strong></p>
-								<p>Child: <strong><%= alcatraz.prices.twoDayBus.child %></strong></p>
-							</div>
+							<% alcatraz.comboProducts.forEach(function(comboProduct) { %>
+								<div class="col-md-4">
+								<%= comboProduct.title %>
+								</div>
+							<% }); %>
 						</div>
-	  			</div>
+					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="pull-right">

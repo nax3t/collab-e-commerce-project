@@ -1,0 +1,17 @@
+<% layout("/layouts/boilerplate") -%>
+
+<div class="row">
+	<div class="col-md-12">
+		<h1>When would you like to visit Alcatraz?</h1>
+	</div>
+<% allAlcatraz.forEach(function(alcatraz) { %>
+  <div class="col-md-2">
+  	<a href="/alcatraz-packages/<%= alcatraz._id %>">
+			<div class="well">
+	  		<h3><%= moment(alcatraz.datetime).format('MMMM Do') %></h3>
+	  		<h4><%= moment(alcatraz.datetime).format('h:mm a') %></h4>
+	  	</div>
+  	</a>
+  </div>
+<% }); %>
+</div>

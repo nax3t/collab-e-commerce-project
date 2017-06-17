@@ -1,0 +1,76 @@
+<% layout('/layouts/boilerplate') -%>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="thumbnail">
+			<img src="http://www.alcatrazcruises.com/website/images/homepage/ac-promo2-1.jpg" alt="Alcatraz Island">
+
+			<div class="caption">
+				<h4><%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %></h4>
+				<p class="description">Combine any product with Alcatraz Island Tour</p>
+			</div>
+		</div>
+		
+		<div class="well">
+			Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla, obcaecati. Iste voluptatum beatae natus dolorem, repellat amet cupiditate aliquam fugit aspernatur ex ipsum, velit fuga magnam dolorum ducimus debitis, enim.
+		</div>
+	</div>
+	<div class="col-md-8">
+		<form action="#" id="alcatraz-purchase-form" method="POST">
+			<div class="form-group form-group-lg">
+				<label for="adult">Adult:</label>
+				<input type="number" name="adult" id="order[adult]" class="form-control" step="1" min="0" value="0">
+
+				<label for="senior">Senior:</label>
+				<input type="number" name="senior" id="order[senior]" class="form-control" step="1" min="0" value="0">
+				
+				<label for="child">Child:</label>
+				<input type="number" name="child" id="order[child]" class="form-control" step="1" min="0" value="0">
+			</div>
+			
+			<div>
+				<label for="combination-product">Choose product to combine with Alcatraz:</label>
+				<select name="order[combination-product]" id="combination-product" class="form-control" required>
+					<option value="" selected disabled>Select product:</option>
+					<% alcatraz.comboProducts.forEach((comboProduct) => { %>
+						<option value="<%= comboProduct.title %>"><%= comboProduct.title %></option>
+					<% }); %>
+				</select>
+			</div>
+			
+			<div>
+				<h4>Total:</h4>
+				$<span id="totalDisplay">0.00</span>
+			</div>
+			<input type="submit" class="btn btn-primary" value="Add to cart">
+		</form>
+	</div>
+</div>
+
+<script>
+	var comboProducts = <%- JSON.stringify(alcatraz.comboProducts) %>;
+	function formChange(e) {
+		// select total display
+		var $totalDisplay = $("#totalDisplay");
+		// match selection and create priceObject
+		var selected = $('#combination-product').val();
+		var priceObject;
+		comboProducts.forEach(function(comboProduct) {
+			if(comboProduct.title === selected) {
+				priceObject = comboProduct;
+			}
+		});
+
+		// calculate purchase total
+		var adults = priceObject.adult * Number(this[0].value);
+		var seniors = priceObject.senior * Number(this[1].value);
+		var children = priceObject.child * Number(this[2].value);
+		var sum = (adults + seniors + children).toFixed(2);
+
+		// update DOM
+		$totalDisplay.text(sum);
+	}
+	// add input listener to form
+	$("#alcatraz-purchase-form").on("input", formChange);
+
+</script>
