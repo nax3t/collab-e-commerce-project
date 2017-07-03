@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var comboProductSchema = new mongoose.Schema({
-  title: { type: String },
+  title: { type: String, unique: true },
 	category: String,
 	sale: { type: Boolean, default: false},
 	adult: Number,

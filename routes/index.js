@@ -5,6 +5,8 @@ var stripe = require("stripe")(process.env.SECRET_KEY);
 
 var Cart = require("../models/cart");
 var Product = require("../models/product");
+var Alcatraz = require("../models/alcatraz");
+var ComboProduct = require("../models/comboproduct");
 var Order = require("../models/order");
 var middleware = require("../middleware");
 
@@ -14,50 +16,60 @@ router.get("/", function (req, res) {
 });
 
 // add to cart
-router.get("/add-to-cart/:id", function (req, res) {
-    var productId = req.params.id;
-
+router.post("/add-to-cart/:id/alcatraz", function (req, res) {
     // if a cart exists pass it, if not pass an empty object
     var cart = new Cart(req.session.cart ? req.session.cart : {});
-
-    // find the product in the db
-    Product.findById(productId, function (err, product) {
-        if (err) {
+    var order = {};
+    ComboProduct.find(req.body.order.combinationProduct, function(err, comboProducts) {
+        if(err) {
             console.log(err);
             return res.redirect("/");
         }
-        // adding the product to cart
-        cart.add(product, product.id);
-        // store cart object in session
-        req.session.cart = cart;
-        console.log(req.session.cart);
-        res.redirect("/");
-        // FLASH MSGS...
+        Alcatraz.findById(req.params.id, function(err, alcatraz) {
+            if(err) {
+                console.log(err);
+                return res.redirect("/");
+            }
+            order.persons = {
+                adult: Number(req.body.order.adult),
+                senior: Number(req.body.order.senior),
+                child: Number(req.body.order.child)
+            }
+            order.alcatraz = alcatraz;
+            order.comboProduct = comboProducts[0];
+            order.price = (order.persons.adult * order.comboProduct.adult) + (order.persons.senior * order.comboProduct.senior) + (order.persons.child * order.comboProduct.child);
+            order.qty = Number(order.persons.adult) + Number(order.persons.senior) + Number(order.persons.child);
+            order.title = req.body.order.title;
+            // adding the order to cart
+            cart.add(order, order.alcatraz._id);
+            // store cart object in session
+            req.session.cart = cart;
+            console.log(req.session.cart);
+            res.redirect("/");
+            // FLASH MSGS...
+        });
     });
 });
 
-// remove one unit from cart
-router.get("/reduce/:id", function (req, res) {
-    var productId = req.params.id;
+// remove all units from cart
+router.get("/remove/:id", function(req, res) {
     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    cart.reduceByOne(productId);
+    cart.removeItem(req.params.id);
     req.session.cart = cart;
     res.redirect("/shopping-cart");
 });
 
-// remove all units from cart
-router.get("/remove/:id", function (req, res) {
-    var productId = req.params.id;
+router.put("/update/:id", function(req, res) {
     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    cart.removeItem(productId);
+    cart.update(req.params.id, req.body.persons);
     req.session.cart = cart;
     res.redirect("/shopping-cart");
 });
 
 // get the shopping cart view
-router.get("/shopping-cart", function (req, res) {
+router.get("/shopping-cart", function(req, res) {
     // if the cart in the session is empty, pass products to view as null
     if (!req.session.cart) {
         return res.render("products/shopping-cart", {products: null, totalPrice: null});

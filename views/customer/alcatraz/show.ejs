@@ -16,16 +16,19 @@
 		</div>
 	</div>
 	<div class="col-md-8">
-		<form action="#" id="alcatraz-purchase-form" method="POST">
+		<form action="/add-to-cart/<%= alcatraz._id %>/alcatraz" id="alcatraz-purchase-form" method="POST">
 			<div class="form-group form-group-lg">
+
 				<label for="adult">Adult:</label>
-				<input type="number" name="adult" id="order[adult]" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="order[adult]" id="adult" class="form-control" step="1" min="0" value="0">
 
 				<label for="senior">Senior:</label>
-				<input type="number" name="senior" id="order[senior]" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="order[senior]" id="senior" class="form-control" step="1" min="0" value="0">
 				
 				<label for="child">Child:</label>
-				<input type="number" name="child" id="order[child]" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="order[child]" id="child" class="form-control" step="1" min="0" value="0">
+				
+				<input type="hidden" name="order[title]" value="<%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %>">
 			</div>
 			
 			<div>
@@ -66,7 +69,6 @@
 		var seniors = priceObject.senior * Number(this[1].value);
 		var children = priceObject.child * Number(this[2].value);
 		var sum = (adults + seniors + children).toFixed(2);
-
 		// update DOM
 		$totalDisplay.text(sum);
 	}
