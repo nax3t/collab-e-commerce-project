@@ -25,3 +25,15 @@
 .edit-cart {
 	margin-top: 20px;
 }
+
+.badge-primary {
+  background-color: #3a87ad;
+}
+
+.badge-primary:hover {
+  background-color: #2d6987;
+}
+
+#cart-primary {
+    color: #3a87ad;
+}

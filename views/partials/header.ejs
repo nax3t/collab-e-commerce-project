@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-    <div class="container-fluid">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Node Tours!</a>
+            <a class="navbar-brand" href="/">DiscoverTown Tours</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -16,10 +16,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <!--Shopping Cart-->
                 <li>
-                    <a href="/shopping-cart">
+                    <a href="/shopping-cart" id="<%= session.cart && session.cart.totalQty > 0 ? 'cart-primary' : '' %>">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
-                        <!--add a badge showing how many items are in the shopping cart, using locals cart object-->
-                        <span class="badge"><% if(session.cart && session.cart.totalQty > 0) { %><%= session.cart.totalQty %><% } %></span>
+                        <!-- add a badge showing how many items are in the shopping cart, using locals cart object-->
+                        <span class="badge badge-primary"><% if(session.cart && session.cart.totalQty > 0) { %><%= session.cart.totalQty %><% } %></span>
                     </a>
                 </li>
                 <li class="dropdown">

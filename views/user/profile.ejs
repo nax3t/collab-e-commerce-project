@@ -4,7 +4,7 @@
     <div class="col-md-8 col-md-offset-2">
         <h1>User Profile</h1>
         <hr>
-        <h2>Order List</h2>
+        <h2>Order Receipts</h2>
 
         <% orders.forEach(function(order) { %>
         <div class="panel panel-default">
@@ -13,8 +13,8 @@
                 <ul class="list-group">
                     <% order.items.forEach(function(item) { %>
                     <li class="list-group-item">
-                        <span class="badge">$<%= item.price %></span>
-                        <%= item.item.title %> (Qty: <%= item.qty %>)
+                        <span class="badge">$<%= item.item.price %></span>
+                        <%= item.item.title %> (Qty: <%= item.item.qty %>)
                     </li>
                     <% }); %>
                 </ul>

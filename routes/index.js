@@ -12,7 +12,7 @@ var middleware = require("../middleware");
 
 // get home page
 router.get("/", function (req, res) {
-    res.redirect("/products");
+    res.render("landing");
 });
 
 // add to cart
@@ -45,7 +45,7 @@ router.post("/add-to-cart/:id/alcatraz", function (req, res) {
             // store cart object in session
             req.session.cart = cart;
             console.log(req.session.cart);
-            res.redirect("/");
+            res.redirect("back");
             // FLASH MSGS...
         });
     });

@@ -1,0 +1,29 @@
+<% layout('layouts/boilerplate') -%>
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h1>Welcome to DiscoverTown Tours</h1>
+		<p>Travel the beautiful city of San Francisco!</p>
+
+		<form class="form-inline" id="landing-form">
+			<div class="form-group">
+				<label for="tour-select">Select a tour:</label>
+				<select id="tour-select" class="form-control">
+					<option value="/alcatraz-packages">Alcatraz Packages</option>
+					<option value="#">Bay Cruise</option>
+					<option value="#">1 Day Bus Tour</option>
+					<option value="#">2 Day Bus Tour</option>
+				</select>
+			</div>
+			<input type="submit" value="Go!" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+
+<script>
+	$('#landing-form').submit(function(e) {
+		e.preventDefault();
+		var url = $(this).find(":selected").val();
+		window.location.href = url;
+	});
+</script>

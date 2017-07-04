@@ -13,7 +13,7 @@ passport.deserializeUser(function (id, done) {
 });
 
 // registration strategy
-passport.use("local.singup", new LocalStrategy({
+passport.use("local.signup", new LocalStrategy({
     usernameField: "email",
     passwordField: "password",
     passReqToCallback: true

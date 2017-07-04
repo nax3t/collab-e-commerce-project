@@ -11,16 +11,16 @@ var Cart = require("../models/cart");
 var Order = require("../models/order");
 
 // get register page
-router.get("/register", middleware.notLoggedIn, function (req, res) {
+router.get("/register", middleware.notLoggedIn, function(req, res) {
     var messages = req.flash("error");
     res.render("user/register", {csrfToken: req.csrfToken(), messages: messages});
 });
 
 // register logic
-router.post("/register", middleware.notLoggedIn, passport.authenticate("local.singup", {
+router.post("/register", middleware.notLoggedIn, passport.authenticate("local.signup", {
     failureRedirect: "/user/register",
     failureFlash: true
-}), function (req, res, next) {
+}), function(req, res, next) {
     if (req.session.oldUrl) {
         var oldUrl = req.session.oldUrl;
         req.session.oldUrl = null;
@@ -31,7 +31,7 @@ router.post("/register", middleware.notLoggedIn, passport.authenticate("local.si
 });
 
 // get login page
-router.get("/login", middleware.notLoggedIn, function (req, res) {
+router.get("/login", middleware.notLoggedIn, function(req, res) {
     var messages = req.flash("error");
     res.render("user/login", {csrfToken: req.csrfToken(), messages: messages});
 });
@@ -51,14 +51,14 @@ router.post("/login", middleware.notLoggedIn, passport.authenticate("local.signi
 });
 
 // logout
-router.get("/logout", middleware.isLoggedIn, function (req, res) {
+router.get("/logout", middleware.isLoggedIn, function(req, res) {
     req.logout();
     req.flash("success", "You have successfully signed out.")
     res.redirect("/");
 });
 
 // get profile page
-router.get("/profile", middleware.isLoggedIn, function (req, res) {
+router.get("/profile", middleware.isLoggedIn, function(req, res) {
     Order.find({user: req.user}, function (err, orders) {
         if (err) {
             console.log(err);
@@ -66,7 +66,7 @@ router.get("/profile", middleware.isLoggedIn, function (req, res) {
             return res.redirect("/products");
         }
         var cart;
-        orders.forEach(function (order) {
+        orders.forEach(function(order) {
             cart = new Cart(order.cart);
             order.items = cart.generateArray();
         });
