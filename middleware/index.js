@@ -3,7 +3,7 @@
 var middlewareObj = {};
 
 // check if the user is logged in
-middlewareObj.isLoggedIn = function (req, res, next) {
+middlewareObj.isLoggedIn = function(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
@@ -13,12 +13,20 @@ middlewareObj.isLoggedIn = function (req, res, next) {
 };
 
 // chekc if the user is not logged in
-middlewareObj.notLoggedIn = function (req, res, next) {
+middlewareObj.notLoggedIn = function(req, res, next) {
     if (!req.isAuthenticated()) {
         return next();
     }
     req.flash("success", "You are already signed in.");
     res.redirect("/products");
 };
+
+middlewareObj.isAdmin = function(req, res, next) {
+    if(req.isAuthenticated() && req.user.admin) {
+        return next();
+    } 
+    req.flash("error", "Access denied");
+    res.redirect('/');
+}
 
 module.exports = middlewareObj;

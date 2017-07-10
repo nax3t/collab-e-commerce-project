@@ -25,6 +25,7 @@ const alcatrazAdminRoutes = require("./routes/admin/alcatraz");
 const alcatrazCustomerRoutes = require("./routes/customer/alcatraz");
 const comboProductRoutes = require("./routes/admin/comboproducts");
 const categoryRoutes = require("./routes/admin/categories");
+const orderAdminRoutes = require("./routes/admin/orders");
 
 mongoose.Promise = global.Promise;
 // mongoose.connect(process.env.DATABASEURL);
@@ -79,6 +80,7 @@ app.use("/admin/alcatraz", alcatrazAdminRoutes);
 app.use("/alcatraz-packages", alcatrazCustomerRoutes);
 app.use("/admin/combo-products", comboProductRoutes);
 app.use("/admin/categories", categoryRoutes);
+app.use("/admin/orders", orderAdminRoutes);
 
 app.listen(3000, () => {
 	console.log('Server running, listening on port 3000');

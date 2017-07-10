@@ -10,17 +10,23 @@ var ComboProduct = require("../models/comboproduct");
 var Order = require("../models/order");
 var middleware = require("../middleware");
 
+router.get("/clearcart", function(req, res) {
+    delete req.session.cart;
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+    res.redirect("back");
+})
+
 // get home page
-router.get("/", function (req, res) {
+router.get("/", function(req, res) {
     res.render("landing");
 });
 
 // add to cart
-router.post("/add-to-cart/:id/alcatraz", function (req, res) {
+router.post("/add-to-cart/:id/alcatraz", function(req, res) {
     // if a cart exists pass it, if not pass an empty object
     var cart = new Cart(req.session.cart ? req.session.cart : {});
-    var order = {};
-    ComboProduct.find(req.body.order.combinationProduct, function(err, comboProducts) {
+    var cartItems = {};
+    ComboProduct.find({title: req.body.cartItems.combinationProduct}, function(err, comboProducts) {
         if(err) {
             console.log(err);
             return res.redirect("/");
@@ -30,32 +36,32 @@ router.post("/add-to-cart/:id/alcatraz", function (req, res) {
                 console.log(err);
                 return res.redirect("/");
             }
-            order.persons = {
-                adult: Number(req.body.order.adult),
-                senior: Number(req.body.order.senior),
-                child: Number(req.body.order.child)
+            cartItems.persons = {
+                adult: Number(req.body.cartItems.adult),
+                senior: Number(req.body.cartItems.senior),
+                child: Number(req.body.cartItems.child)
             }
-            order.alcatraz = alcatraz;
-            order.comboProduct = comboProducts[0];
-            order.price = (order.persons.adult * order.comboProduct.adult) + (order.persons.senior * order.comboProduct.senior) + (order.persons.child * order.comboProduct.child);
-            order.qty = Number(order.persons.adult) + Number(order.persons.senior) + Number(order.persons.child);
-            order.title = req.body.order.title;
-            // adding the order to cart
-            cart.add(order, order.alcatraz._id);
+            cartItems.alcatraz = alcatraz;
+            cartItems.comboProduct = comboProducts[0];
+            cartItems.price = (cartItems.persons.adult * cartItems.comboProduct.adult) + (cartItems.persons.senior * cartItems.comboProduct.senior) + (cartItems.persons.child * cartItems.comboProduct.child);
+            cartItems.qty = Number(cartItems.persons.adult) + Number(cartItems.persons.senior) + Number(cartItems.persons.child);
+            cartItems.title = req.body.cartItems.title;
+            // adding the cartItems to cart
+            cart.add(cartItems);
             // store cart object in session
             req.session.cart = cart;
             console.log(req.session.cart);
-            res.redirect("back");
+            res.redirect("/shopping-cart");
             // FLASH MSGS...
         });
     });
 });
 
 // remove all units from cart
-router.get("/remove/:id", function(req, res) {
+router.get("/remove/:index", function(req, res) {
     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    cart.removeItem(req.params.id);
+    cart.removeItem(req.params.index);
     req.session.cart = cart;
     res.redirect("/shopping-cart");
 });
@@ -76,7 +82,7 @@ router.get("/shopping-cart", function(req, res) {
     }
     // else pass the existing cart
     var cart = new Cart(req.session.cart);
-    res.render("products/shopping-cart", {products: cart.generateArray(), totalPrice: cart.totalPrice});
+    res.render("products/shopping-cart", {products: cart.items, totalPrice: cart.totalPrice});
 });
 
 // get the cart checkout route

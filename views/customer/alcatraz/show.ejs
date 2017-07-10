@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate') -%>
 
-<div class="row">
+<div class="row" id="alcatraz-show">
 	<div class="col-md-4">
 		<div class="thumbnail">
 			<img src="http://www.alcatrazcruises.com/website/images/homepage/ac-promo2-1.jpg" alt="Alcatraz Island">
@@ -20,20 +20,20 @@
 			<div class="form-group form-group-lg">
 
 				<label for="adult">Adult:</label>
-				<input type="number" name="order[adult]" id="adult" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="cartItems[adult]" id="adult" class="form-control" step="1" min="0" value="0">
 
 				<label for="senior">Senior:</label>
-				<input type="number" name="order[senior]" id="senior" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="cartItems[senior]" id="senior" class="form-control" step="1" min="0" value="0">
 				
 				<label for="child">Child:</label>
-				<input type="number" name="order[child]" id="child" class="form-control" step="1" min="0" value="0">
+				<input type="number" name="cartItems[child]" id="child" class="form-control" step="1" min="0" value="0">
 				
-				<input type="hidden" name="order[title]" value="<%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %>">
+				<input type="hidden" name="cartItems[title]" value="<%= moment(alcatraz.datetime).format('MMMM Do, h:mm a') %>">
 			</div>
 			
 			<div>
 				<label for="combination-product">Choose product to combine with Alcatraz:</label>
-				<select name="order[combination-product]" id="combination-product" class="form-control" required>
+				<select name="cartItems[combinationProduct]" id="combination-product" class="form-control" required>
 					<option value="" selected disabled>Select product:</option>
 					<% alcatraz.comboProducts.forEach((comboProduct) => { %>
 						<option value="<%= comboProduct.title %>"><%= comboProduct.title %></option>
@@ -112,7 +112,6 @@
 				priceObject = comboProduct;
 			}
 		});
-
 		// calculate purchase total
 		var adults = priceObject.adult * Number(this[0].value);
 		var seniors = priceObject.senior * Number(this[1].value);
@@ -123,5 +122,4 @@
 	}
 	// add input listener to form
 	$("#alcatraz-purchase-form").on("input", formChange);
-
 </script>

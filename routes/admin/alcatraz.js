@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Alcatraz = require("../../models/alcatraz");
 const ComboProduct = require("../../models/comboproduct");
+const middleware = require("../../middleware");
+
+router.use(middleware.isAdmin);
 
 router.get('/', function(req, res) {
 	Alcatraz.find({}).populate('comboProducts').exec(function(err, allAlcatraz) {

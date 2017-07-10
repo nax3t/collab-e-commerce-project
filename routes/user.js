@@ -59,17 +59,12 @@ router.get("/logout", middleware.isLoggedIn, function(req, res) {
 
 // get profile page
 router.get("/profile", middleware.isLoggedIn, function(req, res) {
-    Order.find({user: req.user}, function (err, orders) {
+    Order.find({user: req.user}, function(err, orders) {
         if (err) {
             console.log(err);
             req.flash("error", "Error fetching user orders.");
             return res.redirect("/products");
         }
-        var cart;
-        orders.forEach(function(order) {
-            cart = new Cart(order.cart);
-            order.items = cart.generateArray();
-        });
         res.render("user/profile", {orders: orders});
     });
 });
