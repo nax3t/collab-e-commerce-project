@@ -10,6 +10,12 @@ var ComboProduct = require("../models/comboproduct");
 var Order = require("../models/order");
 var middleware = require("../middleware");
 
+// Configure mailgun
+var mailgun = require('mailgun-js')({
+    apiKey: process.env.MAILGUN_KEY,
+    domain: 'www.iantskon.com'
+});
+
 router.get("/clearcart", function(req, res) {
     delete req.session.cart;
     var cart = new Cart(req.session.cart ? req.session.cart : {});
@@ -129,9 +135,27 @@ router.post("/checkout", middleware.isLoggedIn, function (req, res) {
                 req.flash("error", "Something went wrong with saving your order.");
                 return res.redirect("/products");
             }
-            req.flash("success", "You successfully paid $" + cart.totalPrice + "!");
             req.session.cart = null;
-            res.redirect("/products");
+
+            // Send order receipt
+            var data = {
+              from: 'learntocodeinfo@gmail.com',
+              to: req.user.email,
+              subject: 'SF Tours - Order Receipt',
+              html: `<p>This is a <strong>test email</strong> for order #${order.id}.</p>
+              <p>Your order cost $${cart.totalPrice} dollars.</p>
+              `
+            };
+             
+            mailgun.messages().send(data, function (error, body) {
+              console.log(body);
+              if(!error){
+                  req.flash("success", "You successfully paid $" + cart.totalPrice + "! Check your email inbox for instructions and receipt.");
+                  res.redirect("/user/profile");
+              } else {
+                  req.flash("error", "Error! Unable to send email, please contact learntocodeinfo@gmail.com");
+              }
+            });    
         });
     });
 });
